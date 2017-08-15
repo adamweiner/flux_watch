@@ -1,3 +1,14 @@
+# flux_watch things
+flux_watch/*
+flux_watch.zip
+!flux_watch/flux_watch.py
+!flux_watch/requirements.txt
+!flux_watch/config.sample.yaml
+
+# terraform things
+terraform/*
+!terraform/flux_watch.tf
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
