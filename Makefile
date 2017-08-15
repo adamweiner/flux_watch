@@ -1,6 +1,6 @@
 .PHONY: reqs
 reqs:
-	pip install --upgrade -r flux_watch/requirements.txt -t ./flux_watch/
+	pip3 install --upgrade -r flux_watch/requirements.txt -t ./flux_watch/
 
 .PHONY: run
 run:
