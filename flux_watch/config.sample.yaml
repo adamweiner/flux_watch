@@ -3,14 +3,14 @@ alert:
         - TQQQ
         - BTC
     threshold: 5 # percent change to alert on
-    timedelta: 1 # maximum of one alert per symbol per this number of hours will be sent
+    timedelta: 1 # maximum of one alert per symbol per this number of hours
 alphavantage_api_key: YOUR_API_KEY
 mailgun:
     api: 'https://api.mailgun.net/v3/sandbox.mailgun.org/messages'
     api_key: 'key-mailgun'
     to: 'Flux Watcher <you@flux.watch>'
-    from: 'flux_watch <postmaster@sandbox.mailgun.org>'
+    from: 'flux_watch <flux_watch@flux.watch>'
 redis:
-    host: 'redis.host'
+    host: localhost
     port: 6379
-    password: 'redis'
+    password: ~
