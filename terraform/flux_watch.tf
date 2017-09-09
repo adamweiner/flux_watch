@@ -70,16 +70,16 @@ resource "aws_lambda_function" "flux_watch_lambda" {
   timeout          = "15"
 }
 
-# Note: This could be updated to run more frequently, considering BTC's lack of market hours
+# Run every 5 mins, barring 2am-7am PDT
 # See also: https://github.com/hashicorp/terraform/issues/4393
-resource "aws_cloudwatch_event_rule" "five_mins_market_hours" {
-  name                = "five_mins_market_hours"
-  description         = "Fires every five minutes during market hours"
-  schedule_expression = "cron(0/5 14-21 ? * MON-FRI *)"
+resource "aws_cloudwatch_event_rule" "five_mins_waking_hours" {
+  name                = "five_mins_waking_hours"
+  description         = "Fires every five minutes, minus sleep time"
+  schedule_expression = "cron(0/5 0-9,14-23 ? * * *)"
 }
 
 resource "aws_cloudwatch_event_target" "run_flux_watch_lambda" {
-  rule      = "${aws_cloudwatch_event_rule.five_mins_market_hours.name}"
+  rule      = "${aws_cloudwatch_event_rule.five_mins_waking_hours.name}"
   target_id = "flux_watch_lambda"
   arn       = "${aws_lambda_function.flux_watch_lambda.arn}"
 }
@@ -89,5 +89,5 @@ resource "aws_lambda_permission" "allow_cloudwatch_to_call_flux_watch" {
   action        = "lambda:InvokeFunction"
   function_name = "${aws_lambda_function.flux_watch_lambda.function_name}"
   principal     = "events.amazonaws.com"
-  source_arn    = "${aws_cloudwatch_event_rule.five_mins_market_hours.arn}"
+  source_arn    = "${aws_cloudwatch_event_rule.five_mins_waking_hours.arn}"
 }

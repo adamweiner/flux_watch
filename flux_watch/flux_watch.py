@@ -17,7 +17,7 @@ AV_CLOSE_KEY = '4. close'
 COINDESK_CURRENT_API = 'https://api.coindesk.com/v1/bpi/currentprice.json'
 COINDESK_HISTORICAL_API = 'https://api.coindesk.com/v1/bpi/historical/close.json'
 
-VERSION = '0.2.2'
+VERSION = '0.2.3'
 config = {}
 
 # Initialize logger
@@ -28,6 +28,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+
 
 def main(event, context):
     """Fetch percent change for each symbol and send an alert email if it
@@ -52,7 +53,7 @@ def main(event, context):
         cache.ping()
     except redis.exceptions.ConnectionError as e:
         logger.fatal('Error connecting to Redis: %s', e)
-        exit(1)
+        sys.exit(1)
 
     # Fetch percent change for each symbol
     for symbol in config['alert']['symbols']:
@@ -75,7 +76,7 @@ def main(event, context):
                     logger.info('Alert sent to %s', config['mailgun']['to'])
                 except Exception as e:
                     logger.fatal('Error sending alert email: %s', e)
-                    exit(1)
+                    sys.exit(1)
             else:
                 logger.warning('No alert sent: alerted within past %s', alert_timedelta)
 
@@ -88,8 +89,7 @@ def get_symbol_percent_change(symbol):
     """
     if symbol == 'BTC':
         return get_bitcoin_percent_change()
-    else:
-        return get_stock_percent_change(symbol)
+    return get_stock_percent_change(symbol)
 
 
 def get_bitcoin_percent_change():

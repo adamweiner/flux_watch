@@ -31,7 +31,7 @@ Stock price data is provided by [AlphaVantage](https://www.alphavantage.co/). Bi
   ```
 
 ## Deployment
-Terraform is used to manage deployment to AWS. As provided, `terraform/flux_watch.tf` will run `flux_watch` every five minutes during traditional market hours. You may wish to change this if tracking Bitcoin, as the market does not close like traditional markets do. This project forgoes Elasticache, since companies such as [Redis Labs](https://redislabs.com/pricing/redis-cloud/) provide a free tier that meets the minimal caching requirements that this project has. You may wish to consider Elasticache to run both the Lambda function and cache within a secure VPC, but that is not done here. One of the goals of this project is to minimize cost of deployment. Deployment can be done in one shot using the `make deploy` target, or step-by-step as outlined below.
+Terraform is used to manage deployment to AWS. As provided, `terraform/flux_watch.tf` will run `flux_watch` every five minutes (barring some late night hours, PST :zzz:). This project forgoes Elasticache, since companies such as [Redis Labs](https://redislabs.com/pricing/redis-cloud/) provide a free tier that meets the minimal caching requirements that this project has. You may wish to consider Elasticache to run both the Lambda function and cache within a secure VPC, but that is not done here. One of the goals of this project is to minimize cost of deployment. Deployment can be done in one shot using the `make deploy` target, or step-by-step as outlined below.
 
 1. `$ make zip`
 2. `$ AWS_ACCESS_KEY_ID=akid AWS_SECRET_ACCESS_KEY=sak make plan`

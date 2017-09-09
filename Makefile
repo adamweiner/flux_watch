@@ -1,6 +1,19 @@
-.PHONY: reqs
+max_line_length := 110
+
+PHONY: reqs
 reqs:
 	pip3 install --upgrade -r flux_watch/requirements.txt -t ./flux_watch/
+
+.PHONY: pep8
+pep8:
+	pep8 flux_watch/flux_watch.py --max-line-length=$(max_line_length)
+
+.PHONY: pylint
+pylint:
+	pylint flux_watch/flux_watch.py --rcfile ./.pylintrc --max-line-length=$(max_line_length)
+
+.PHONY: check
+check: pep8 pylint
 
 .PHONY: run
 run:
