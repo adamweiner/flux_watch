@@ -36,3 +36,13 @@ Terraform is used to manage deployment to AWS. As provided, `terraform/flux_watc
 1. `$ make zip`
 2. `$ AWS_ACCESS_KEY_ID=akid AWS_SECRET_ACCESS_KEY=sak make plan`
 3. `$ AWS_ACCESS_KEY_ID=akid AWS_SECRET_ACCESS_KEY=sak make apply`
+
+## Alerts
+Email alerts look like this:
+```
+Symbol: BTC
+Movement: -7.14% (exact: -7.138910982493986%)
+Timestamp: 2017-08-15T15:52:00+00:00
+
+flux_watch v0.2.2
+```
